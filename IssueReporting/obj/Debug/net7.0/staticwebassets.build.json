@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "nlkafUblO2vRwP7PoBkSvjinMCcoRfL7eoH7uzBuDQQ=",
+  "Source": "IssueReporting.Api",
+  "BasePath": "_content/IssueReporting.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

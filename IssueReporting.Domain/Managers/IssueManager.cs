@@ -1,28 +1,52 @@
-﻿using IssueReporting.Contracts.Interfaces.Managers;
+﻿using AutoMapper;
+using IssueReporting.Contracts.Interfaces.Managers;
+using IssueReporting.Contracts.Interfaces.Repositories;
+using IssueReporting.Contracts.Models;
 using IssueReporting.Contracts.Models.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebApiTemplate.Domain.Errors;
 
 namespace IssueReporting.Domain.Managers
 {
     public class IssueManager : IissueManager
     {
-        public Task CreateIssueAsync(IssueMasterDTO issue)
+        private readonly IissueRepository _issueRepo;
+        private IMapper _mapper { get; }
+        public IssueManager(IissueRepository issueRepo, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _issueRepo = issueRepo;
+        }
+        public async Task CreateIssueAsync(IssueMasterDTO issue)
+        {
+            var issueEntity = _mapper.Map<IssueMaster>(issue);
+
+            var res = await _issueRepo.GetIssuesByNameAndAppIdAsync(issue.IssueName, issue.ApplicationId);
+            if (res != null)
+            {
+                throw new ServiceException("Issue exist with same name");
+            }
+            await _issueRepo.CreateIssueAsync(issueEntity);
         }
 
-        public Task<IssueMasterDTO> GetIssuesByAppId(int appId)
+        public async Task<List<IssueMasterDTO>> GetIssuesByAppId(int appId)
         {
-            throw new NotImplementedException();
+            var res = await _issueRepo.GetIssuesByAppId(appId);
+            return _mapper.Map<List<IssueMasterDTO>>(res);
         }
 
-        public Task UpdateIssueAsync(IssueMasterDTO issue)
+        public async Task UpdateIssueAsync(IssueMasterDTO issue)
         {
-            throw new NotImplementedException();
+            var issueMasterEntity = _mapper.Map<IssueMaster>(issue);
+
+            var issueMaster = await _issueRepo.GetIssuesByIssueId(issue.IssueId);
+            if (issue == null)
+            {
+                throw new ServiceException("Issue not found");
+            }
+            issue.IssueName = issue.IssueName;
+            issue.ApplicationId = issue.ApplicationId;
+
+            await _issueRepo.UpdateIssueAsync(issueMaster);
         }
     }
 }

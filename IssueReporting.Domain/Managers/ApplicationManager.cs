@@ -1,28 +1,57 @@
-﻿using IssueReporting.Contracts.Interfaces.Managers;
+﻿using AutoMapper;
+using IssueReporting.Contracts.Interfaces.Managers;
+using IssueReporting.Contracts.Interfaces.Repositories;
+using IssueReporting.Contracts.Models;
 using IssueReporting.Contracts.Models.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebApiTemplate.Domain.Errors;
 
 namespace IssueReporting.Domain.Managers
 {
     public class ApplicationManager : IApplicationManager
     {
-        public Task CreateApplicationAsync(ApplicationMasterDTO application)
+        private readonly IApplicationRepository _applicationRepository;
+        private IMapper _mapper { get; }
+        public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _applicationRepository = applicationRepository;
+        }
+        public async Task CreateApplicationAsync(ApplicationMasterDTO application)
+        {
+            var appEntity = _mapper.Map<ApplicationMaster>(application);
+
+            var app = await _applicationRepository.GetApplicationsByNameAsync(appEntity.ApplcationName);
+            if (app != null)
+            {
+                throw new ServiceException("Application exist with same email");
+            }
+            await _applicationRepository.CreateApplicationAsync(appEntity);
         }
 
-        public Task<ApplicationMasterDTO> GetApplicationsByTypeIdAsync(int typeId)
+        public async Task<List<ApplicationMasterDTO>> GetApplicationsByTypeIdAsync(int typeId)
         {
-            throw new NotImplementedException();
+            var applications = await _applicationRepository.GetApplicationsByTypeIdAsync(typeId);
+            return _mapper.Map<List<ApplicationMasterDTO>>(applications);
+
         }
 
-        public Task UpdateApplicationAsync(ApplicationMasterDTO application)
+        public async Task UpdateApplicationAsync(ApplicationMasterDTO application)
         {
-            throw new NotImplementedException();
+            var appEntity = _mapper.Map<ApplicationMaster>(application);
+
+            var app = await _applicationRepository.GetApplicationsByIdAsync(appEntity.ApplicationId);
+            if (app == null)
+            {
+                throw new ServiceException("Application not found");
+            }
+            app = new ApplicationMaster()
+            {
+                ApplicationId = appEntity.ApplicationId,
+                ApplcationName = appEntity.ApplcationName,
+                TypeId = appEntity.TypeId,
+
+            };
+            await _applicationRepository.UpdateApplicationAsync(app);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace IssueReporting.Contracts.Interfaces.Managers
 {
     public interface IissueManager
     {
-        Task<IssueMasterDTO> GetIssuesByAppId(int appId);
+        Task<List<IssueMasterDTO>> GetIssuesByAppId(int appId);
 
         Task CreateIssueAsync(IssueMasterDTO issue);
 

@@ -1,6 +1,7 @@
 ﻿using IssueReporting.Contracts.Interfaces.Repositories;
 using IssueReporting.Contracts.Models;
 using IssueReporting.DataAccess.Configuration;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +17,32 @@ namespace IssueReporting.DataAccess.Concrete
         {
             _context = context;
         }
-        public Task CreateApplicationAsync(ApplicationMaster application)
+        public async Task CreateApplicationAsync(ApplicationMaster application)
         {
-            throw new NotImplementedException();
+            await _context.ApplicationMasters.AddAsync(application);
+            await _context.SaveChangesAsync();
+
         }
 
-        public Task<ApplicationMaster> GetApplicationsByTypeIdAsync(int typeId)
+        public async Task<ApplicationMaster> GetApplicationsByIdAsync(int appId)
         {
-            throw new NotImplementedException();
+            return await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId);
         }
 
-        public Task UpdateApplicationAsync(ApplicationMaster application)
+        public async Task<ApplicationMaster> GetApplicationsByNameAsync(string appName)
         {
-            throw new NotImplementedException();
+            return await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplcationName == appName);
+        }
+
+        public async Task<List<ApplicationMaster>> GetApplicationsByTypeIdAsync(int typeId)
+        {
+            return await _context.ApplicationMasters.Where(a => a.TypeId == typeId).ToListAsync();
+        }
+
+        public async Task UpdateApplicationAsync(ApplicationMaster application)
+        {
+            _context.ApplicationMasters.Update(application);
+            await _context.SaveChangesAsync();
         }
     }
 }

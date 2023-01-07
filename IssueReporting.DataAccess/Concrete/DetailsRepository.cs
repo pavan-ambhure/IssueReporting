@@ -1,6 +1,9 @@
 ﻿using IssueReporting.Contracts.Interfaces.Repositories;
 using IssueReporting.Contracts.Models;
 using IssueReporting.DataAccess.Configuration;
+using Microsoft.EntityFrameworkCore;
+using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IssueReporting.DataAccess.Concrete
 {
@@ -11,24 +14,25 @@ namespace IssueReporting.DataAccess.Concrete
         {
             _context = context;
         }
-        public Task<IssueDetail> GetIssueDetailByTicketIdAsync(int ticketId)
+        public async Task<IssueDetail> GetIssueDetailByTicketIdAsync(int ticketId)
         {
-            throw new NotImplementedException();
+            return await _context.IssueDetails.FirstOrDefaultAsync(a => a.TicketId == ticketId);
         }
 
-        public Task<List<IssueDetail>> GetIssuesDetailsAsync()
+        public async Task<List<IssueDetail>> GetIssuesDetailsAsync()
         {
-            throw new NotImplementedException();
+            return await _context.IssueDetails.ToListAsync();
         }
 
-        public Task<List<IssueDetail>> GetIssuesDetailsByUserIdAsync(int userId)
+        public async Task<List<IssueDetail>> GetIssuesDetailsByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            return await _context.IssueDetails.Where(a => a.CreatedBy == userId).ToListAsync();
         }
 
-        public Task UpdateIssueDetails(IssueDetail issueDetail)
+        public async Task UpdateIssueDetails(IssueDetail issueDetail)
         {
-            throw new NotImplementedException();
+            _context.IssueDetails.Update(issueDetail);
+            await _context.SaveChangesAsync();
         }
     }
 }

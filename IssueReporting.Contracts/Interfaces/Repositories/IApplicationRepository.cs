@@ -4,7 +4,9 @@ namespace IssueReporting.Contracts.Interfaces.Repositories
 {
     public interface IApplicationRepository
     {
-        Task<ApplicationMaster> GetApplicationsByTypeIdAsync(int typeId);
+        Task<List<ApplicationMaster>> GetApplicationsByTypeIdAsync(int typeId);
+        Task<ApplicationMaster> GetApplicationsByNameAsync(string appName);
+        Task<ApplicationMaster> GetApplicationsByIdAsync(int appId);
 
         Task CreateApplicationAsync(ApplicationMaster application);
 

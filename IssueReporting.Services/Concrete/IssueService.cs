@@ -1,29 +1,37 @@
-﻿using IssueReporting.Services.Contract.Request;
+﻿using AutoMapper;
+using IssueReporting.Contracts.Interfaces.Managers;
+using IssueReporting.Contracts.Models.DTOs;
+using IssueReporting.Services.Contract.Request;
 using IssueReporting.Services.Contract.Response;
 using IssueReporting.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IssueReporting.Services.Concrete
 {
     public class IssueService : IissueService
     {
-        public Task CreateIssueAsync(CreateIssueMasterRequest issue)
+        private readonly IissueManager _issueManager = null!;
+        private IMapper _mapper { get; }
+        public IssueService(IissueManager issueManager, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _issueManager = issueManager;
+        }
+        public async Task CreateIssueAsync(CreateIssueMasterRequest issue)
+        {
+            var dto = _mapper.Map<IssueMasterDTO>(issue);
+            await _issueManager.CreateIssueAsync(dto);
         }
 
-        public Task<IssueMasterResponse> GetIssuesByAppId(int appId)
+        public async Task<List<IssueMasterResponse>> GetIssuesByAppId(int appId)
         {
-            throw new NotImplementedException();
+            var res = await _issueManager.GetIssuesByAppId(appId);
+            return _mapper.Map<List<IssueMasterResponse>>(res);
         }
 
-        public Task UpdateIssueAsync(UpdateIssueMasterRequest issue)
+        public async Task UpdateIssueAsync(UpdateIssueMasterRequest issue)
         {
-            throw new NotImplementedException();
+            var dto = _mapper.Map<IssueMasterDTO>(issue);
+            await _issueManager.UpdateIssueAsync(dto);
         }
     }
 }

@@ -1,4 +1,8 @@
-﻿using IssueReporting.Services.Contract.Request;
+﻿using AutoMapper;
+using IssueReporting.Contracts.Interfaces.Managers;
+using IssueReporting.Contracts.Models;
+using IssueReporting.Contracts.Models.DTOs;
+using IssueReporting.Services.Contract.Request;
 using IssueReporting.Services.Contract.Response;
 using IssueReporting.Services.Interfaces;
 using System;
@@ -11,24 +15,41 @@ namespace IssueReporting.Services.Concrete
 {
     public class DetailsService : IDetailsService
     {
-        public Task<IssueDetailResponse> GetIssueDetailByTicketIdAsync(int ticketId)
+        private readonly IDetailsManager _detailsManager = null!;
+        private IMapper _mapper { get; }
+        public DetailsService(IDetailsManager detailsManager, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _detailsManager = detailsManager;
+        }
+        public async Task<IssueDetailResponse> GetIssueDetailByTicketIdAsync(int ticketId)
+        {
+            var res = await _detailsManager.GetIssueDetailByTicketIdAsync(ticketId);
+            return _mapper.Map<IssueDetailResponse>(res);
         }
 
-        public Task<List<IssueDetailResponse>> GetIssuesDetailsAsync()
+        public async Task<List<IssueDetailResponse>> GetIssuesDetailsAsync()
         {
-            throw new NotImplementedException();
+            var res = await _detailsManager.GetIssuesDetailsAsync();
+            return _mapper.Map<List<IssueDetailResponse>>(res);
         }
 
-        public Task<List<IssueDetailResponse>> GetIssuesDetailsByUserIdAsync(int userId)
+        public async Task<List<IssueDetailResponse>> GetIssuesDetailsByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            var res = await _detailsManager.GetIssuesDetailsByUserIdAsync(userId);
+            return _mapper.Map<List<IssueDetailResponse>>(res);
         }
 
-        public Task UpdateIssueDetails(UpdateIssueDetailsRequest issueDetail)
+        public async Task UpdateIssueDetails(UpdateIssueDetailsRequest issueDetail)
         {
-            throw new NotImplementedException();
+            var ticket = _mapper.Map<IssueDetailDTO>(issueDetail);
+            await _detailsManager.UpdateIssueDetails(ticket);
+        }
+
+        public async Task CreateTicketAsync(CreateTicketRequest request)
+        {
+            var ticket = _mapper.Map<IssueDetailDTO>(request);
+           await   _detailsManager.CreateTicketAsync(ticket);
         }
     }
 }

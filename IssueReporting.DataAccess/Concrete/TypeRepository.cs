@@ -24,5 +24,27 @@ namespace IssueReporting.DataAccess.Concrete
             var res = await _context.TypeMasters.ToListAsync();
             return res;
         }
+
+        public async Task<TypeMaster?> GetTypeByIdAsync(int id)
+        {
+            var res = await _context.TypeMasters.FirstOrDefaultAsync(a => a.TypeId == id);
+            if (res != null)
+            {
+                return res;
+            }
+            return null;
+        }
+
+        public async Task<TypeMaster> GetTypeByNameAsync(string name)
+        {
+            var res= await _context.TypeMasters.FirstOrDefaultAsync(a => a.TypeName
+            .ToLower()
+            .Equals(name.ToLower()));
+            if(res== null)
+            {
+                return new TypeMaster();
+            }
+            return res;
+        }
     }
 }

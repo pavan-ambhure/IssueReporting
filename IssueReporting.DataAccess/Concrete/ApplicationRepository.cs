@@ -24,14 +24,24 @@ namespace IssueReporting.DataAccess.Concrete
 
         }
 
-        public async Task<ApplicationMaster> GetApplicationsByIdAsync(int appId)
+        public async Task<ApplicationMaster?> GetApplicationsByIdAsync(int appId)
         {
-            return await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId);
+            var res= await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId);
+            if (res != null)
+            {
+                return res;
+            }
+            return null;
         }
 
-        public async Task<ApplicationMaster> GetApplicationsByNameAsync(string appName)
+        public async Task<ApplicationMaster?> GetApplicationsByNameAndTypeIdAsync(string appName,int typeId)
         {
-            return await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplcationName == appName);
+            var res= await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplcationName.ToLower() == appName.ToLower() && a.TypeId==typeId);
+            if(res != null)
+            {
+                return res;
+            }
+            return null;
         }
 
         public async Task<List<ApplicationMaster>> GetApplicationsByTypeIdAsync(int typeId)

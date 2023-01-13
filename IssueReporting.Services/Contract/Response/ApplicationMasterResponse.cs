@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IssueReporting.Contracts.Models.DTOs;
 
 namespace IssueReporting.Services.Contract.Response
 {
-    public class ApplicationMasterResponse
+    public class ApplicationMasterResponse : ApplicationMasterDTO
     {
     }
 }

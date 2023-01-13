@@ -11,7 +11,7 @@ namespace IssueReporting.Services.Interfaces
 {
     public interface IissueService
     {
-        Task<IssueMasterResponse> GetIssuesByAppId(int appId);
+        Task<List<IssueMasterResponse>> GetIssuesByAppId(int appId);
 
         Task CreateIssueAsync(CreateIssueMasterRequest issue);
 

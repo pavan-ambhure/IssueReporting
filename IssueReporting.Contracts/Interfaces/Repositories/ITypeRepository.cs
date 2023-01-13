@@ -6,5 +6,7 @@ namespace IssueReporting.Contracts.Interfaces.Repositories
     {
         Task<List<TypeMaster>> GetTypeAsync();
         Task CreateTypeAsync(TypeMaster type);
+        Task<TypeMaster> GetTypeByNameAsync(string name);
+        Task<TypeMaster?> GetTypeByIdAsync(int id);
     }
 }

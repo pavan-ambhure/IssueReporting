@@ -27,7 +27,7 @@ namespace IssueReporting.DataAccess.Concrete
             return res;
         }
 
-        public async Task<IssueMaster> GetIssuesByIssueId(int issueId)
+        public async Task<IssueMaster?> GetIssuesByIssueId(int issueId)
         {
             var res = await _context.IssueMasters.FirstOrDefaultAsync(a => a.IssueId == issueId);
             return res;

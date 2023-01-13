@@ -11,5 +11,7 @@ namespace IssueReporting.Contracts.Interfaces.Managers
         Task<List<IssueDetailDTO>> GetIssuesDetailsByUserIdAsync(int userId);
 
         Task UpdateIssueDetails(IssueDetailDTO issueDetail);
+
+        Task CreateTicketAsync(IssueDetailDTO request);
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WebApiTemplate.Contracts.Interfaces.Repositories;
 using WebApiTemplate.Contracts.Models;
 using WebApiTemplate.Contracts.Models.DTOs;
+using WebApiTemplate.Domain.Errors;
 
 namespace IssueReporting.Domain.Managers
 {
@@ -36,6 +37,11 @@ namespace IssueReporting.Domain.Managers
             {
                 TypeName = typeName,
             };
+
+            var existingType=await _typeRepository.GetTypeByNameAsync(typeName);
+            if (existingType.TypeName != null) {
+                throw new ServiceException("Type name already exist");
+            }
 
            await _typeRepository.CreateTypeAsync(type);
         }

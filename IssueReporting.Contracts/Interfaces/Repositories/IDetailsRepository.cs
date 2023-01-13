@@ -1,4 +1,5 @@
 ﻿using IssueReporting.Contracts.Models;
+using IssueReporting.Contracts.Models.DTOs;
 
 namespace IssueReporting.Contracts.Interfaces.Repositories
 {
@@ -11,5 +12,6 @@ namespace IssueReporting.Contracts.Interfaces.Repositories
         Task<List<IssueDetail>> GetIssuesDetailsByUserIdAsync(int userId);
 
         Task UpdateIssueDetails(IssueDetail issueDetail);
+        Task CreateTicketAsync(IssueDetail request);
     }
 }

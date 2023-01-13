@@ -1,18 +1,13 @@
 ﻿using AutoMapper;
 using IssueReporting.Contracts.Interfaces.Managers;
+using IssueReporting.Contracts.Models.DTOs;
 using IssueReporting.Services.Contract.Request;
 using IssueReporting.Services.Contract.Response;
 using IssueReporting.Services.Interfaces;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IssueReporting.Services.Concrete
 {
-    public class ApplicationService :IApplicationService
+    public class ApplicationService : IApplicationService
     {
         private readonly IApplicationManager _applicationManager = null!;
         private IMapper _mapper { get; }
@@ -22,19 +17,22 @@ namespace IssueReporting.Services.Concrete
             _applicationManager = applicationManager;
         }
 
-        public Task<ApplicationMasterResponse> GetApplicationsByTypeIdAsync(int typeId)
+        public async Task<List<ApplicationMasterResponse>> GetApplicationsByTypeIdAsync(int typeId)
         {
-            throw new NotImplementedException();
+            var res = await _applicationManager.GetApplicationsByTypeIdAsync(typeId);
+            return _mapper.Map<List<ApplicationMasterResponse>>(res);
         }
 
-        public Task CreateApplicationAsync(CreateApplicationRequest application)
+        public async Task CreateApplicationAsync(CreateApplicationRequest application)
         {
-            throw new NotImplementedException();
+            var appMaster = _mapper.Map<ApplicationMasterDTO>(application);
+            await _applicationManager.CreateApplicationAsync(appMaster);
         }
 
-        public Task UpdateApplicationAsync(UpdateApplicationRequest application)
+        public async Task UpdateApplicationAsync(UpdateApplicationRequest application)
         {
-            throw new NotImplementedException();
+            var appMaster = _mapper.Map<ApplicationMasterDTO>(application);
+            await _applicationManager.UpdateApplicationAsync(appMaster);
         }
     }
 }

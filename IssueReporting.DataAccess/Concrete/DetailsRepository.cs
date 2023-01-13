@@ -14,6 +14,13 @@ namespace IssueReporting.DataAccess.Concrete
         {
             _context = context;
         }
+
+        public async Task CreateTicketAsync(IssueDetail request)
+        {
+            await _context.IssueDetails.AddAsync(request);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IssueDetail> GetIssueDetailByTicketIdAsync(int ticketId)
         {
             return await _context.IssueDetails.FirstOrDefaultAsync(a => a.TicketId == ticketId);
@@ -21,7 +28,11 @@ namespace IssueReporting.DataAccess.Concrete
 
         public async Task<List<IssueDetail>> GetIssuesDetailsAsync()
         {
-            return await _context.IssueDetails.ToListAsync();
+            return await _context.IssueDetails
+                .Include(a => a.Type)
+                .Include(a=>a.Application)
+                .Include(a=>a.Issue)
+                .ToListAsync();
         }
 
         public async Task<List<IssueDetail>> GetIssuesDetailsByUserIdAsync(int userId)
@@ -31,7 +42,7 @@ namespace IssueReporting.DataAccess.Concrete
 
         public async Task UpdateIssueDetails(IssueDetail issueDetail)
         {
-            _context.IssueDetails.Update(issueDetail);
+             _context.IssueDetails.Update(issueDetail);
             await _context.SaveChangesAsync();
         }
     }

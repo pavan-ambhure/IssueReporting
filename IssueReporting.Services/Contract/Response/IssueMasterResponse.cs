@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IssueReporting.Services.Contract.Response
+﻿namespace IssueReporting.Services.Contract.Response
 {
     public class IssueMasterResponse
     {
+        public int IssueId { get; set; }
+
+        public string IssueName { get; set; } = null!;
+
+        public int ApplicationId { get; set; }
     }
 }

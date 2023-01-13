@@ -10,48 +10,82 @@ namespace IssueReporting.Domain.Managers
     public class ApplicationManager : IApplicationManager
     {
         private readonly IApplicationRepository _applicationRepository;
+        private readonly ITypeRepository _typeRepository;
         private IMapper _mapper { get; }
-        public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper)
+        public ApplicationManager(IApplicationRepository applicationRepository, IMapper mapper, ITypeRepository typeRepository)
         {
             _mapper = mapper;
             _applicationRepository = applicationRepository;
+            _typeRepository = typeRepository;
         }
         public async Task CreateApplicationAsync(ApplicationMasterDTO application)
         {
-            var appEntity = _mapper.Map<ApplicationMaster>(application);
-
-            var app = await _applicationRepository.GetApplicationsByNameAsync(appEntity.ApplcationName);
-            if (app != null)
+            try
             {
-                throw new ServiceException("Application exist with same email");
+                var type = await _typeRepository.GetTypeByIdAsync(application.TypeId);
+                if(type== null)
+                {
+                    throw new ServiceException("Wrong type");
+                }
+
+                var appEntity = _mapper.Map<ApplicationMaster>(application);
+
+                var app = await _applicationRepository.GetApplicationsByNameAndTypeIdAsync(appEntity.ApplcationName,appEntity.TypeId);
+                if (app != null)
+                {
+                    throw new ServiceException("Application exist with same name");
+                }
+
+                await _applicationRepository.CreateApplicationAsync(appEntity);
+
             }
-            await _applicationRepository.CreateApplicationAsync(appEntity);
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public async Task<List<ApplicationMasterDTO>> GetApplicationsByTypeIdAsync(int typeId)
         {
-            var applications = await _applicationRepository.GetApplicationsByTypeIdAsync(typeId);
-            return _mapper.Map<List<ApplicationMasterDTO>>(applications);
+            try
+            {
+                var applications = await _applicationRepository.GetApplicationsByTypeIdAsync(typeId);
+                return _mapper.Map<List<ApplicationMasterDTO>>(applications);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
         }
 
         public async Task UpdateApplicationAsync(ApplicationMasterDTO application)
         {
-            var appEntity = _mapper.Map<ApplicationMaster>(application);
-
-            var app = await _applicationRepository.GetApplicationsByIdAsync(appEntity.ApplicationId);
-            if (app == null)
+            try
             {
-                throw new ServiceException("Application not found");
+                var appEntity = _mapper.Map<ApplicationMaster>(application);
+
+                var app = await _applicationRepository.GetApplicationsByIdAsync(appEntity.ApplicationId);
+                if (app == null)
+                {
+                    throw new ServiceException("Application not found");
+                }
+                app = new ApplicationMaster()
+                {
+                    ApplicationId = appEntity.ApplicationId,
+                    ApplcationName = appEntity.ApplcationName,
+                    TypeId = appEntity.TypeId,
+
+                };
+                await _applicationRepository.UpdateApplicationAsync(app);
             }
-            app = new ApplicationMaster()
+            catch (Exception ex)
             {
-                ApplicationId = appEntity.ApplicationId,
-                ApplcationName = appEntity.ApplcationName,
-                TypeId = appEntity.TypeId,
 
-            };
-            await _applicationRepository.UpdateApplicationAsync(app);
+                throw ex;
+            }
         }
     }
 }

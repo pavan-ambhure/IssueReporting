@@ -8,5 +8,8 @@ namespace IssueReporting.Services.Contract.Request
 {
     public class CreateIssueMasterRequest
     {
+        public string IssueName { get; set; } = null!;
+
+        public int ApplicationId { get; set; }
     }
 }

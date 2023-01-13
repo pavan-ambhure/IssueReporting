@@ -6,7 +6,7 @@ namespace IssueReporting.Services.Interfaces
 {
     public interface IApplicationService
     {
-        Task<ApplicationMasterResponse> GetApplicationsByTypeIdAsync(int typeId);
+        Task<List<ApplicationMasterResponse>> GetApplicationsByTypeIdAsync(int typeId);
 
         Task CreateApplicationAsync(CreateApplicationRequest application);
 

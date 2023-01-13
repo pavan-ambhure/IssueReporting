@@ -6,7 +6,7 @@ namespace IssueReporting.Contracts.Interfaces.Repositories
     public interface IissueRepository
     {
         Task<List<IssueMaster>> GetIssuesByAppId(int appId);
-        Task<IssueMaster> GetIssuesByIssueId(int issueId);
+        Task<IssueMaster?> GetIssuesByIssueId(int issueId);
 
         Task CreateIssueAsync(IssueMaster issue);
 

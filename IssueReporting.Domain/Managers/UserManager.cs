@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
+using IssueReporting.Contracts.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using WebApiTemplate.Contracts.Enums;
 using WebApiTemplate.Contracts.Interfaces.Managers;
 using WebApiTemplate.Contracts.Interfaces.Repositories;
-using WebApiTemplate.Contracts.Models;
 using WebApiTemplate.Contracts.Models.DTOs;
 using WebApiTemplate.Domain.Errors;
-using System.Text.Json;
-using IssueReporting.Contracts.Models;
 
 namespace WebApiTemplate.Domain.Managers
 {
@@ -20,7 +19,7 @@ namespace WebApiTemplate.Domain.Managers
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _config;
         private IMapper _mapper { get; }
-        public UserManager(IConfiguration config,IUserRepository userRepository, IMapper mapper)
+        public UserManager(IConfiguration config, IUserRepository userRepository, IMapper mapper)
         {
             _config = config;
             _mapper = mapper;
@@ -32,7 +31,7 @@ namespace WebApiTemplate.Domain.Managers
             var userEntity = _mapper.Map<UserMaster>(UserDto);
 
             var user = await _userRepository.GetUserbyEmailAsync(userEntity.UserEmail);
-            if (user!=null)
+            if (user != null)
             {
                 throw new ServiceException("User Exist with same email");
             }
@@ -59,7 +58,7 @@ namespace WebApiTemplate.Domain.Managers
         private string GenerateToken(UserMaster user)
         {
 
-            String role =((UserRole)user.Role).ToString();
+            String role = ((UserRole)user.Role).ToString();
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

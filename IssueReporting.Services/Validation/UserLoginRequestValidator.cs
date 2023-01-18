@@ -12,10 +12,10 @@ namespace WebApiTemplate.Services.Validation
     {
         public UserLoginRequestValidator()
         {
-            RuleFor(x => x.UserName)
+            RuleFor(x => x.UserEmail)
                .Cascade(CascadeMode.Stop)
                .NotEmpty()
-               .WithMessage("Name can not be empty");
+               .WithMessage("Email can not be empty");
 
             RuleFor(x => x.Password)
                .Cascade(CascadeMode.Stop)

@@ -1,12 +1,7 @@
 ﻿using IssueReporting.Contracts.Interfaces.Repositories;
 using IssueReporting.Contracts.Models;
-using IssueReporting.DataAccess.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IssueReporting.DataAccess.Configuration;
 
 namespace IssueReporting.DataAccess.Concrete
 {
@@ -26,7 +21,7 @@ namespace IssueReporting.DataAccess.Concrete
 
         public async Task<ApplicationMaster?> GetApplicationsByIdAsync(int appId)
         {
-            var res= await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId);
+            var res = await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId);
             if (res != null)
             {
                 return res;
@@ -34,10 +29,10 @@ namespace IssueReporting.DataAccess.Concrete
             return null;
         }
 
-        public async Task<ApplicationMaster?> GetApplicationsByNameAndTypeIdAsync(string appName,int typeId)
+        public async Task<ApplicationMaster?> GetApplicationsByNameAndTypeIdAsync(string appName, int typeId)
         {
-            var res= await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplcationName.ToLower() == appName.ToLower() && a.TypeId==typeId);
-            if(res != null)
+            var res = await _context.ApplicationMasters.FirstOrDefaultAsync(a => a.ApplcationName.ToLower() == appName.ToLower() && a.TypeId == typeId);
+            if (res != null)
             {
                 return res;
             }

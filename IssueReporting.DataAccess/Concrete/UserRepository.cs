@@ -1,34 +1,28 @@
 ﻿using IssueReporting.Contracts.Models;
-using IssueReporting.DataAccess.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebApiTemplate.Contracts.Interfaces.Repositories;
-using WebApiTemplate.Contracts.Models;
+using IssueReporting.DataAccess.Configuration;
 
 namespace WebApiTemplate.DataAccess.Concrete
 {
     public class UserRepository : IUserRepository
     {
         private readonly IssueReportingContext _db;
-        public UserRepository(IssueReportingContext db) 
+        public UserRepository(IssueReportingContext db)
         {
-            _db= db;
+            _db = db;
         }
-        public async Task<UserMaster> CreateAsync(UserMaster entity)
+        public async Task<UserMaster?> CreateAsync(UserMaster entity)
         {
             _db.UserMasters.Add(entity);
             await _db.SaveChangesAsync();
             return await GetUserbyEmailAsync(entity.UserEmail);
         }
 
-        public async Task<UserMaster> GetUserAsync(UserMaster entity)
+        public async Task<UserMaster?> GetUserAsync(UserMaster entity)
         {
-            var user = await _db.UserMasters.FirstOrDefaultAsync(a => a.UserEmail == entity.UserEmail 
-            && a.Password==entity.Password);
+            var user = await _db.UserMasters.FirstOrDefaultAsync(a => a.UserEmail == entity.UserEmail
+            && a.Password == entity.Password);
 
             if (user == null)
             {
@@ -38,13 +32,13 @@ namespace WebApiTemplate.DataAccess.Concrete
             return user;
         }
 
-        public async Task<UserMaster> GetUserbyEmailAsync(string email)
+        public async Task<UserMaster?> GetUserbyEmailAsync(string email)
         {
-            var user = await _db.UserMasters.SingleOrDefaultAsync(a => a.UserEmail==email);
+            var user = await _db.UserMasters.SingleOrDefaultAsync(a => a.UserEmail == email);
 
             if (user == null)
             {
-                return new UserMaster();
+                return null;
             }
 
             return user;

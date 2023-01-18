@@ -1,7 +1,7 @@
 ﻿using IssueReporting.Contracts.Interfaces.Repositories;
 using IssueReporting.Contracts.Models;
-using IssueReporting.DataAccess.Configuration;
 using Microsoft.EntityFrameworkCore;
+using IssueReporting.DataAccess.Configuration;
 
 namespace IssueReporting.DataAccess.Concrete
 {
@@ -37,10 +37,10 @@ namespace IssueReporting.DataAccess.Concrete
 
         public async Task<TypeMaster> GetTypeByNameAsync(string name)
         {
-            var res= await _context.TypeMasters.FirstOrDefaultAsync(a => a.TypeName
+            var res = await _context.TypeMasters.FirstOrDefaultAsync(a => a.TypeName
             .ToLower()
             .Equals(name.ToLower()));
-            if(res== null)
+            if (res == null)
             {
                 return new TypeMaster();
             }

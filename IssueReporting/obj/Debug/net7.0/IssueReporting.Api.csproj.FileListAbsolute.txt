@@ -158,7 +158,6 @@ C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\Iss
 C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\IssueReporting.Api.AssemblyInfoInputs.cache
 C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\IssueReporting.Api.AssemblyInfo.cs
 C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\IssueReporting.Api.csproj.CoreCompileInputs.cache
-C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\IssueReporting.Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\IssueReporting.Api.MvcApplicationPartsAssemblyInfo.cache
 C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\staticwebassets\msbuild.IssueReporting.Api.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Pavan\React\IssueReporting\IssueReporting\IssueReporting\obj\Debug\net7.0\staticwebassets\msbuild.build.IssueReporting.Api.props

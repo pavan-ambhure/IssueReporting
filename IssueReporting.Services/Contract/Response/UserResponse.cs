@@ -5,9 +5,12 @@ namespace WebApiTemplate.Services.Contract.Response
     public class UserResponse
     {
         /// <summary>
-        /// User Name
+        /// User Id
         /// </summary>
-        public string UserName { get; set; } = string.Empty;
+        public int UserId
+        {
+            get; set;
+        }
 
         /// <summary>
         /// User email

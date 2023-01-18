@@ -2,8 +2,6 @@
 using IssueReporting.Contracts.Models;
 using IssueReporting.DataAccess.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace IssueReporting.DataAccess.Concrete
 {

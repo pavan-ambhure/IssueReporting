@@ -7,15 +7,15 @@ namespace WebApiTemplate.Services.Validation
     {
         public CreateUserRequestValidator()
         {
-            RuleFor(x => x.UserName)
+            RuleFor(x => x.UserEmail)
                 .Cascade(CascadeMode.Stop)
                 .NotEmpty()
-                .WithMessage("Name can not be empty");
+                .WithMessage("Email can not be empty");
 
-            RuleFor(x => x.UserEmail)
+            RuleFor(x => x.Password)
                .Cascade(CascadeMode.Stop)
                .NotEmpty()
-               .WithMessage("Email can not be empty");
+               .WithMessage("Password can not be empty");
 
             RuleFor(x => x.Role)
                .Cascade(CascadeMode.Stop)

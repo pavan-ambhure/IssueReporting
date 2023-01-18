@@ -2,14 +2,23 @@
 {
     public class UserLoginRequest
     {
+      
         /// <summary>
-        /// User Name
+        /// User Email
         /// </summary>
-        public string UserName { get; set; } = string.Empty;
+        public string UserEmail { get; set; } = null!;
 
         /// <summary>
-        /// Password
+        /// User Password
         /// </summary>
-        public string Password { get; set; } = string.Empty;
+
+        public string Password { get; set; } = null!;
+
+        /// <summary>
+        /// User Role
+        /// </summary>
+
+        public int Role { get; set; }
+
     }
 }

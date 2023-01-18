@@ -32,7 +32,7 @@ namespace WebApiTemplate.Domain.Managers
             var userEntity = _mapper.Map<UserMaster>(UserDto);
 
             var user = await _userRepository.GetUserbyEmailAsync(userEntity.UserEmail);
-            if (user.UserEmail != "")
+            if (user!=null)
             {
                 throw new ServiceException("User Exist with same email");
             }
@@ -58,13 +58,15 @@ namespace WebApiTemplate.Domain.Managers
         // To generate token
         private string GenerateToken(UserMaster user)
         {
-       
+
+            String role =((UserRole)user.Role).ToString();
+
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
                 new Claim(ClaimTypes.UserData, JsonSerializer.Serialize(user)),
-                new Claim(ClaimTypes.Role, Convert.ToString((UserRole)user.Role))
+                new Claim(ClaimTypes.Role,role)
             };
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Audience"],

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApiTemplate.Contracts.Enums;
 using WebApiTemplate.Services.Contract.Request;
 using WebApiTemplate.Services.Contract.Response;
 using WebApiTemplate.Services.Interfaces;
@@ -8,6 +9,7 @@ namespace WebApiTemplate.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService = null!;
@@ -27,7 +29,8 @@ namespace WebApiTemplate.Api.Controllers
         /// <param name="createUser"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("user")]
+        [Authorize(Roles = "Admin")]
+        [Route("create")]
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
@@ -54,8 +57,8 @@ namespace WebApiTemplate.Api.Controllers
         {
             var result = await _userService.AuthenticateAsync(userLogin);
             return Ok(result);
-            
-          
+
+
         }
     }
 }

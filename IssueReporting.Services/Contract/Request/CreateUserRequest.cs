@@ -5,24 +5,32 @@ namespace WebApiTemplate.Services.Contract.Request
     public class CreateUserRequest
     {
         /// <summary>
-        /// User Name
+        /// User Id
         /// </summary>
-        public string UserName { get; set; } = string.Empty;
+        public int UserId { get; set; }
 
         /// <summary>
-        /// Password
+        /// User Email
         /// </summary>
-        public string Password { get; set; } = string.Empty;
+        public string UserEmail { get; set; } = null!;
 
         /// <summary>
-        /// User email
+        /// User Password
         /// </summary>
-        public string UserEmail { get; set; } = string.Empty;
+
+        public string Password { get; set; } = null!;
 
         /// <summary>
         /// User Role
         /// </summary>
+
         public UserRole Role { get; set; }
+
+
+        /// <summary>
+        /// Is User active
+        /// </summary>
+        public bool? IsActive { get; set; }
 
     }
 }

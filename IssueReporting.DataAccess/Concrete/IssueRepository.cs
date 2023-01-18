@@ -1,9 +1,7 @@
 ﻿using IssueReporting.Contracts.Interfaces.Repositories;
 using IssueReporting.Contracts.Models;
-using IssueReporting.Contracts.Models.DTOs;
-using IssueReporting.DataAccess.Configuration;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
+using IssueReporting.DataAccess.Configuration;
 
 namespace IssueReporting.DataAccess.Concrete
 {
@@ -35,7 +33,7 @@ namespace IssueReporting.DataAccess.Concrete
 
         public async Task<IssueMaster> GetIssuesByNameAndAppIdAsync(string issueName, int appId)
         {
-            var res = await _context.IssueMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId && a.IssueName==issueName);
+            var res = await _context.IssueMasters.FirstOrDefaultAsync(a => a.ApplicationId == appId && a.IssueName == issueName);
             return res;
         }
 

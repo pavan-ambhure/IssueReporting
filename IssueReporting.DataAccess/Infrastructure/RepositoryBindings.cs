@@ -1,7 +1,6 @@
 ﻿using IssueReporting.Contracts.Interfaces.Repositories;
 using IssueReporting.DataAccess.Concrete;
 using IssueReporting.DataAccess.Configuration;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using WebApiTemplate.Contracts.Interfaces.Repositories;
 using WebApiTemplate.DataAccess.Concrete;

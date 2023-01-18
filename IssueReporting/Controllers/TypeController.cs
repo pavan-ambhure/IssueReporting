@@ -1,11 +1,13 @@
 ﻿using IssueReporting.Services.Contract.Response;
 using IssueReporting.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IssueReporting.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TypeController : ControllerBase
     {
         private readonly ITypeService _typeService = null!;

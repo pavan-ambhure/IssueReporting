@@ -5,10 +5,10 @@ namespace WebApiTemplate.Contracts.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        Task<UserMaster> CreateAsync(UserMaster entity);
+        Task<UserMaster?> CreateAsync(UserMaster entity);
 
-        Task<UserMaster> GetUserbyEmailAsync(string email);
+        Task<UserMaster?> GetUserbyEmailAsync(string email);
 
-        Task<UserMaster> GetUserAsync(UserMaster entity);
+        Task<UserMaster?> GetUserAsync(UserMaster entity);
     }
 }

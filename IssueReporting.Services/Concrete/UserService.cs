@@ -56,7 +56,6 @@ namespace WebApiTemplate.Services.Concrete
             var token = await _userManager.AuthenticateAsync(userDto);
             return token;
 
-
         }
     }
 }

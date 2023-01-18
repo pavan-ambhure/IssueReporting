@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace IssueReporting.Contracts.Models;
+namespace IssueReporting.Api.Models;
 
 public partial class IssueDetail
 {

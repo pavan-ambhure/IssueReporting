@@ -1,6 +1,7 @@
 ﻿using IssueReporting.Services.Contract.Request;
 using IssueReporting.Services.Contract.Response;
 using IssueReporting.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace IssueReporting.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class IssueController : ControllerBase
     {
         private readonly IissueService _issueService = null!;

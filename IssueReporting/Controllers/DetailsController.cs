@@ -1,12 +1,14 @@
 ﻿using IssueReporting.Services.Contract.Request;
 using IssueReporting.Services.Contract.Response;
 using IssueReporting.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IssueReporting.Api.Controllers
 {
     [Route("api/Ticket")]
     [ApiController]
+    [Authorize]
     public class DetailsController : ControllerBase
     {
         private readonly IDetailsService _detailsService = null!;
@@ -80,7 +82,7 @@ namespace IssueReporting.Api.Controllers
         {
             //await _detailsService.UpdateIssueDetails(req);
             //return Ok("Ticket updated.");
-            return NotFound("Feature inprogress")
+            return NotFound("Feature inprogress");
         }
 
         /// <summary>Create ticket      /// </summary>
